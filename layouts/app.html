@@ -10,9 +10,12 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/#/">Posts</a></li>
 					<li><a href="/#/register">Register</a></li>
-					<li><a href="/#/login">Login</a></li>
+					<li ng-if="!currentUser" ><a href="/#/login">Login</a></li>
 				</ul>
 				<p ng-if="currentUser" class="navbar-text navbar-right">
+					<button ng-click="deleteCurrentUser()" type="button" class="btn btn-default btn-sm">
+          				<span class="glyphicon glyphicon-log-out"></span> Log out
+        			</button>
 					Signed in as {{currentUser.username}}
 				</p>
 			</div>
@@ -20,6 +23,7 @@
 		<div ng-view></div>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
 		<script src='/app.js'></script>
 	</body>
 </html>

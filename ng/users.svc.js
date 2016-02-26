@@ -15,6 +15,11 @@ angular.module('app')
 		});
 	}
 
+	svc.logout = function() {
+		svc.token = null;
+		$http.defaults.headers.common['X-Auth'] = null;
+	}
+
 	svc.create = function(user) {
 		return $http.post('/api/users', user);
 	}
