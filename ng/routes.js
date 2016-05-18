@@ -13,4 +13,8 @@ angular.module('app')
 		controller: 'LoginCtrl', 
 		templateUrl: 'login.html'
 	})
+    .when('/project', {
+        controller: 'ProjectsCtrl', 
+		templateUrl: 'project.html'
+    })
 })
