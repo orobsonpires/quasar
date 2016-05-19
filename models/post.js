@@ -1,3 +1,7 @@
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
+
 var db = require('../db');
 
 var Post = db.model('Post', {

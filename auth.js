@@ -1,3 +1,7 @@
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
+
 var jwt = require('jwt-simple');
 var config = require('./config');
 

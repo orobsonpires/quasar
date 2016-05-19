@@ -5,7 +5,7 @@ angular.module('app')
 		return $http.get('/api/users', {
 			headers: {'X-Auth': this.token}
 		});
-	}
+	} 
 
 	svc.login = function(user) {
 		return $http.post('/api/sessions', user).then(function(val) {

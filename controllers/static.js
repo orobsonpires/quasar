@@ -1,3 +1,7 @@
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
+
 var router = require('express').Router();
 var express = require('express');
 

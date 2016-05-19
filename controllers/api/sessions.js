@@ -1,3 +1,7 @@
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
+
 var router = require('express').Router();
 var User = require('../../models/user');
 var bcrypt = require('bcrypt-nodejs');
@@ -27,7 +31,7 @@ router.post('/', function(req, res, next) {
     			return res.send(401);
     		}
 
-    		var token = jwt.encode({username: user.username}, config.secret);
+    		let token = jwt.encode({username: user.username}, config.secret);
 
 			res.send(token);
 		});

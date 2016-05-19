@@ -1,6 +1,10 @@
-var Post = require('../../models/post');
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
 
-var router = require('express').Router();
+let Post = require('../../models/post');
+
+let router = require('express').Router();
 
 router.get('/', function(req, res, next) {
 
@@ -15,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
-	var post = new Post({
+	let post = new Post({
 		body: req.body.body
 	});
 

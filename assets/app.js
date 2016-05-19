@@ -1,1 +1,157 @@
-var app=angular.module("app",["ngRoute","ngMessages"]);angular.module("app").controller("ApplicationCtrl",["$scope","$location","UsersSvc",function(t,e,o){t.$on("login",function(e,o){t.currentUser=o}),t.deleteCurrentUser=function(){t.currentUser=null,o.logout(),e.path("/login")}}]),angular.module("app").controller("LoginCtrl",["$scope","$location","UsersSvc",function(t,e,o){t.login=function(n,r){o.login({username:n,password:r}).then(function(o){t.$emit("login",o.data),e.path("/")})}}]),angular.module("app"),app.controller("PostsCtrl",["$scope","PostsSvc",function(t,e){e.fetch().success(function(e){t.posts=e}),t.addPost=function(){t.postBody&&e.create({username:"dickeyxxx",body:t.postBody}).success(function(e){t.posts.unshift(e),t.postBody=null})}}]),angular.module("app"),app.service("PostsSvc",["$http",function(t){this.fetch=function(){return t.get("/api/posts")},this.create=function(e){return t.post("/api/posts",e)}}]),angular.module("app").controller("ProjectsCtrl",["$scope","ProjectSvc",function(t,e){e.fetch().success(function(e){t.projects=e})}]),angular.module("app").service("ProjectSvc",["$http",function(t){this.fetch=function(){return t.get("http://localhost:3000/api/projects")},this.create=function(e){return t.post("http://localhost:3000/api/projects",e)}}]),angular.module("app").config(["$routeProvider",function(t){t.when("/",{controller:"ProjectsCtrl",templateUrl:"projects.html"}).when("/register",{controller:"UsersCtrl",templateUrl:"register.html"}).when("/login",{controller:"LoginCtrl",templateUrl:"login.html"}).when("/project",{controller:"ProjectsCtrl",templateUrl:"project.html"})}]),angular.module("app"),app.controller("UsersCtrl",["$scope","$location","UsersSvc",function(t,e,o){t.createUser=function(){t.username&&t.password&&o.create({username:t.username,password:t.password}).success(function(o){t.username=null,t.password=null,e.path("/login")})}}]),angular.module("app").service("UsersSvc",["$http",function(t){var e=this;e.getUser=function(){return t.get("/api/users",{headers:{"X-Auth":this.token}})},e.login=function(o){return t.post("/api/sessions",o).then(function(o){return e.token=o.data,t.defaults.headers.common["X-Auth"]=o.data,e.getUser()})},e.logout=function(){e.token=null,t.defaults.headers.common["X-Auth"]=null},e.create=function(e){return t.post("/api/users",e)}}]);
+var app = angular.module('app', [
+	'ngRoute',
+	'ngMessages'
+])
+angular.module('app')
+.controller('ApplicationCtrl', function($scope, $location, UsersSvc) {
+	
+	$scope.$on('login', function(_, user) {
+		$scope.currentUser = user;
+	});
+
+	$scope.deleteCurrentUser = function() {
+		$scope.currentUser = null;
+		UsersSvc.logout();
+		$location.path('/login');
+	}
+})
+angular.module('app')
+.controller('LoginCtrl', function($scope, $location, UsersSvc) {
+	$scope.login = function(username, password) {
+		UsersSvc.login({
+			username: username, 
+			password: password
+		}).then(function(response) {
+			$scope.$emit('login', response.data);
+			$location.path('/');
+		});
+	}
+});
+angular.module('app');
+
+app.controller('PostsCtrl', function($scope, PostsSvc) {
+	PostsSvc.fetch().success(function(posts) {
+		$scope.posts = posts;
+	});
+	$scope.addPost = function() {
+		if($scope.postBody) {
+			PostsSvc.create(
+			{
+				username: 'dickeyxxx',
+				body: $scope.postBody
+			}).success(function(post) {
+				$scope.posts.unshift(post);
+				$scope.postBody = null;
+			});
+		}
+	}
+});
+angular.module('app');
+
+app.service('PostsSvc', function($http) {
+	this.fetch = function() {
+		return $http.get('/api/posts');
+	}
+
+	this.create = function(post) {
+		return $http.post('/api/posts', post);
+	}
+});
+angular.module('app').controller('ProjectsCtrl', function ($scope, $location, ProjectSvc) {
+    ProjectSvc.fetch().success(function (projects) {
+        $scope.projects = projects;
+    });
+    
+    $scope.createProject = function () {
+        if($scope.name) {
+            ProjectSvc.create({
+                name: $scope.name,
+                description: $scope.description,
+                client: $scope.client,
+                category: $scope.category,
+                createdby: 'testUser'
+            }).success(function(project) {
+                $scope.name = null;
+                $scope.description = null;
+                $scope.client = null;
+                $scope.category = null;
+                
+                $location.path('/');
+            });
+        }
+    };
+});
+angular.module('app').service('ProjectSvc', function ($http) {
+    this.fetch = function () {
+       return $http.get('http://localhost:3000/api/projects');
+    };
+    
+    this.create = function (project) {
+        return $http.post('http://localhost:3000/api/projects', project);
+    };
+});
+
+angular.module('app')
+.config(function($routeProvider) {
+	$routeProvider
+	.when('/', {
+		controller: 'ProjectsCtrl', 
+		templateUrl: 'projects.html'
+	})
+	.when('/register', {
+		controller: 'UsersCtrl', 
+		templateUrl: 'register.html'
+	})
+	.when('/login', {
+		controller: 'LoginCtrl', 
+		templateUrl: 'login.html'
+	})
+    .when('/project', {
+        controller: 'ProjectsCtrl', 
+		templateUrl: 'project.html'
+    })
+})
+angular.module('app');
+
+app.controller('UsersCtrl', function($scope, $location, UsersSvc) {
+	$scope.createUser = function() {
+		if($scope.username && $scope.password) {
+			UsersSvc.create(
+			{
+				username: $scope.username,
+				password: $scope.password
+			}).success(function(user) {
+				$scope.username = null;
+				$scope.password = null;
+
+				$location.path('/login');
+			});
+		}
+	}
+});
+angular.module('app')
+.service('UsersSvc', function($http) {
+	var svc = this;
+	svc.getUser = function() {
+		return $http.get('/api/users', {
+			headers: {'X-Auth': this.token}
+		});
+	} 
+
+	svc.login = function(user) {
+		return $http.post('/api/sessions', user).then(function(val) {
+			svc.token = val.data;
+			$http.defaults.headers.common['X-Auth'] = val.data;
+			return svc.getUser();
+		});
+	}
+
+	svc.logout = function() {
+		svc.token = null;
+		$http.defaults.headers.common['X-Auth'] = null;
+	}
+
+	svc.create = function(user) {
+		return $http.post('/api/users', user);
+	}
+})

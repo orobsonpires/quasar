@@ -9,7 +9,6 @@
        			<p ng-message="maxlength">Your username is too long.</p>
       		</div>
 		</div>
-
 		<div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
 			<label>Password</label>
 			<input name="password" class="form-control" type="password" ng-model="password" ng-minlength="5" ng-maxlength="10" required>
@@ -19,7 +18,6 @@
        			<p ng-message="maxlength">Your password is too long.</p>
       		</div>
 		</div>
-
 		<input ng-disabled="userForm.$invalid" class="btn btn-primary btn-lg btn-block" type="submit" value="Register">
 	</form>
 </div>

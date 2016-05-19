@@ -1,12 +1,16 @@
-let db = require('../db');
+/**
+ * @author Rob Pi <orobsonpires@gmail.com>
+ */
 
-let Project = db.model('Project',{
+var db = require('../db');
+
+var project = db.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
     category: {type: String, required: false},
-    clientCompany: {type: String, required: false},
-    createdBy: {type: String, required: true},
+    client: {type: String, required: false},
+    createdby: {type: String, required: true},
     date: {type: Date, required: true, default: Date.now}
 });
 
-module.exports = Project;
+module.exports = db.model('Project', project, 'project');
