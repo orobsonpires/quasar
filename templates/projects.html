@@ -1,14 +1,13 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Projects</h2>
+        <h1 class="page-header">Projects</h1>
         <p>See everything you and your team are working on.</p>
-        <hr/>
         <a href="#/project" class="btn btn-success">+ Start a New Project</a>
     </div>
 </div>
 <h5>Active Projects</h5>
 <div class="row" ng-controller='ProjectsCtrl'>
-    <div class="col-md-3" ng-repeat="project in projects | orderBy:'-date'" >
+    <div class="col-md-3" ng-repeat="project in projects | orderBy:'-date'">
         <div class="panel panel-default">
             <div class="panel-heading">{{project.name}}</div>
             <div class="panel-body"></div>

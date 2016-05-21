@@ -2,9 +2,9 @@
  * @author Rob Pi <orobsonpires@gmail.com>
  */
 
-let Post = require('../../models/post');
+var Post = require('../../models/post');
 
-let router = require('express').Router();
+var router = require('express').Router();
 
 router.get('/', function(req, res, next) {
 
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
-	let post = new Post({
+	var post = new Post({
 		body: req.body.body
 	});
 
