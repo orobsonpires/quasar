@@ -1,1 +1,2 @@
  group files based on features
+ replace {{}} for ng-bind
